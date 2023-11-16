@@ -20,10 +20,8 @@ app.use(session({
 
 function check(req, res, next) {
     if (req.session.isAuth){
-        //console.log("not going")
         next()
     }
-        //next()
     else
         res.redirect('/')
 }
@@ -62,7 +60,6 @@ var datainfo
 
 
 app.get('/', function (req, res) {
-    // res.render('login')
     if(req.session.isAuth){
         res. redirect('/home')
      }
@@ -75,10 +72,7 @@ app.post('/login', function (req, res) {
     datainfo = req.body.username
     if (userinfo.user === req.body.username && userinfo.pass === req.body.password) {
         req.session.isAuth= true
-        //console.log("first")
         res.redirect('/home')
-        //console.log("midlle ")
-        
     }
 
     else {
@@ -87,16 +81,13 @@ app.post('/login', function (req, res) {
 })
 
 app.get('/home',check, function (req, res) {
-    //console.log("second")
     res.render('home', { datainfo, value: true, product })
 })
 
 app.get('/logout', function (req, res) {
     req.session.isAuth = false
     req.session.destroy(()=>{
-        
         res.render('login',{logging:true})
-        // res.redirect('/')
     })
 })
 
